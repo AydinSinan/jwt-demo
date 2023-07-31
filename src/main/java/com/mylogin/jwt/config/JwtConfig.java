@@ -49,12 +49,18 @@ public class JwtConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/api/generateToken").permitAll() // only allow this endpoint without authentication
+                .and()
+                .authorizeRequests().antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated() // for any other requests, authentication should be performed.
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // every request should be independent of other and server does not have to manage session
 
         http
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http
+                .headers().frameOptions().sameOrigin();
+
     }
 
     @Bean

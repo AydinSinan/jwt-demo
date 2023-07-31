@@ -1,6 +1,11 @@
 package com.mylogin.jwt.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="USER_TABLE")
@@ -17,6 +22,23 @@ public class UserEntity {
     private String lastName;
     private String email;
     private String phone;
+
+    @JsonManagedReference// helps avoid dependency in bidirectional mapping
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLE",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") })
+
+    private Set<RoleEntity> roles = new HashSet<>();
+
+    public Set<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
+    }
 
     public Long getId() {
         return id;
