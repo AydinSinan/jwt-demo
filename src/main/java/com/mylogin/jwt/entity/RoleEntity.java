@@ -2,6 +2,9 @@ package com.mylogin.jwt.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,7 +12,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ROLE_TABLE")
+
+
 public class RoleEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

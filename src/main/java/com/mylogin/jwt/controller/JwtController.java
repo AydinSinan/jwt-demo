@@ -2,6 +2,7 @@ package com.mylogin.jwt.controller;
 
 import com.mylogin.jwt.model.JwtRequest;
 import com.mylogin.jwt.model.JwtResponse;
+import com.mylogin.jwt.model.UserModel;
 import com.mylogin.jwt.service.CustomUserDetailService;
 import com.mylogin.jwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,17 @@ public class JwtController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @PostMapping("/register")
+    public ResponseEntity<UserModel> register(@RequestBody UserModel userModel) {
+
+        UserModel userModel1 = customUserDetailService.register(userModel);
+        ResponseEntity<UserModel> re = new ResponseEntity<>(userModel1, HttpStatus.CREATED);
+        return re;
+    }
+
+
+
     @PostMapping("/generateToken")
     public ResponseEntity<JwtResponse> generateToken(@RequestBody JwtRequest jwtRequest) {
 
